@@ -11,7 +11,6 @@
 NewPing M_sensor(M_TRIG, M_ECHO, 1000);
 NewPing R_sensor(R_TRIG, R_ECHO, 1000);
 NewPing L_sensor(L_TRIG, L_ECHO, 1000);
-
 Motor motor;
 
 int L_cm = 0, M_cm = 0, R_cm = 0;
