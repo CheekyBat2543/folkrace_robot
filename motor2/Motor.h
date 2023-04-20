@@ -26,9 +26,17 @@
 class Motor{
 public:
   Motor();
-  void begin(void);
-  void setSpeed(int Lspeed, int Rspeed);
-  void brake(void);
+  void begin(void); // sets motor pins as OUTPUT
+  void setSpeed(int Lspeed, int Rspeed); // sets pwm signal sent to motor shied
+  void brake(void); // brake in case of urgent stop
+  void turn_left(int speed, int amount); // amount stands for 10 degrees per number
+  void turn_right(int speed, int amount); // amount stands for 10 degrees per number 
+  int R_count;
+  int L_count; 
+  bool brakeState;
+  ~Motor();
+
+
 private:  
   int _L_in1;
   int _L_in2;
