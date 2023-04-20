@@ -105,7 +105,7 @@ void setSpeed(int Lspeed, int Rspeed){
 
 void brake(void){
   setSpeed(-80, -80);
-  delay(250);
+  delay(250); //bruh
   setSpeed(0,0);
   delay(200);
 }
