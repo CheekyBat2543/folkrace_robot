@@ -1,7 +1,6 @@
 #include "Motor.h"
 #include <NewPing.h>
 
-
 #define L_TRIG 5
 #define L_ECHO 4
 #define R_TRIG 52
@@ -39,13 +38,12 @@ void setup() {
   Serial.setTimeout(10);
   delay(2500);
   sensorRead();
-
 }
 
 void loop() {
 
   sensorRead();
-  
+
   /*Serial.print("Left Distance: ");
   Serial.println(L_cm);
   Serial.print("Middle Distance: ");
@@ -64,8 +62,7 @@ void loop() {
     }
     motor.R_count = 0;
     motor.L_count = 0;
-  }
-  else if (motor.L_count >= 3) {
+  } else if (motor.L_count >= 3) {
     while (motor.L_count != 0) {
       if (M_cm < 4 && (R_cm < 4 || L_cm < 4)) {
         break;

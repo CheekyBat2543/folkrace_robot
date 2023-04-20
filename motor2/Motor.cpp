@@ -1,7 +1,6 @@
 #include "Motor.h"
 #include "Arduino.h"
 
-
 #define L_TRIG 5
 #define L_ECHO 4
 #define R_TRIG 52
