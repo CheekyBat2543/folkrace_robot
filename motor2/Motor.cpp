@@ -21,91 +21,85 @@
 #define R_ENB 9
 
 Motor::Motor() {
-  _L_in1 = L_IN1;
-  _L_in2 = L_IN2;
-  _L_enA = L_ENA;
-  _L_in3 = L_IN3;
-  _L_in4 = L_IN4;
-  _L_enB = L_ENB;
-  _R_in1 = R_IN1;
-  _R_in2 = R_IN2;
-  _R_enA = R_ENA;
-  _R_in3 = R_IN3;
-  _R_in4 = R_IN4;
-  _R_enB = R_ENB;
   R_count = 0;
   L_count = 0;
   brakeState = true;
 }
 
 void Motor::begin(void) {
-  pinMode(_L_in1, OUTPUT);
-  pinMode(_L_in2, OUTPUT);
-  pinMode(_L_enA, OUTPUT);
+  pinMode(L_IN1, OUTPUT);
+  pinMode(L_IN2, OUTPUT);
+  pinMode(L_ENA, OUTPUT);
 
-  pinMode(_L_in3, OUTPUT);
-  pinMode(_L_in4, OUTPUT);
-  pinMode(_L_enB, OUTPUT);
+  pinMode(L_IN3, OUTPUT);
+  pinMode(L_IN4, OUTPUT);
+  pinMode(L_ENB, OUTPUT);
 
-  pinMode(_R_in1, OUTPUT);
-  pinMode(_R_in2, OUTPUT);
-  pinMode(_R_enA, OUTPUT);
+  pinMode(R_IN2, OUTPUT);
+  pinMode(R_IN2, OUTPUT);
+  pinMode(R_ENA, OUTPUT);
 
-  pinMode(_R_in3, OUTPUT);
-  pinMode(_R_in4, OUTPUT);
-  pinMode(_R_enB, OUTPUT);
+  pinMode(R_IN3, OUTPUT);
+  pinMode(R_IN4, OUTPUT);
+  pinMode(R_ENB, OUTPUT);
 }
 void Motor::setSpeed(int Lspeed, int Rspeed) {
 
-  if (Lspeed >= 0) {
-    digitalWrite(_L_in1, LOW);
-    digitalWrite(_L_in2, HIGH);
-    analogWrite(_L_enA, Lspeed); // Left front,
+  if(Lspeed == Rspeed) {
+    L_count = 0;
+    R_count = 0;
+  }
 
-    digitalWrite(_L_in3, LOW);
-    digitalWrite(_L_in4, HIGH);
-    analogWrite(_L_enB, Lspeed); // Left back,
+  if (Lspeed >= 0) {
+    digitalWrite(L_IN1, LOW);
+    digitalWrite(L_IN2, HIGH);
+    analogWrite(L_ENA, Lspeed); // Left front,
+
+    digitalWrite(L_IN3, LOW);
+    digitalWrite(L_IN4, HIGH);
+    analogWrite(L_ENB, Lspeed); // Left back,
   } else {
     Lspeed *= -1;
-    digitalWrite(_L_in1, HIGH);
-    digitalWrite(_L_in2, LOW);
-    analogWrite(_L_enA, Lspeed);
+    digitalWrite(L_IN1, HIGH);
+    digitalWrite(L_IN2, LOW);
+    analogWrite(L_ENA, Lspeed);
 
-    digitalWrite(_L_in3, HIGH);
-    digitalWrite(_L_in4, LOW);
-    analogWrite(_L_enB, Lspeed);
+    digitalWrite(L_IN3, HIGH);
+    digitalWrite(L_IN4, LOW);
+    analogWrite(L_ENB, Lspeed);
   }
 
   if (Rspeed >= 0) {
-    digitalWrite(_R_in1, LOW);
-    digitalWrite(_R_in2, HIGH);
-    analogWrite(_R_enA, Rspeed); // Right front ,
+    digitalWrite(R_IN2, LOW);
+    digitalWrite(R_IN2, HIGH);
+    analogWrite(R_ENA, Rspeed); // Right front ,
 
-    digitalWrite(_R_in3, HIGH);
-    digitalWrite(_R_in4, LOW);
-    analogWrite(_R_enB, Rspeed); // Right Back,
+    digitalWrite(R_IN3, HIGH);
+    digitalWrite(R_IN4, LOW);
+    analogWrite(R_ENB, Rspeed); // Right Back,
 
   } else {
     Rspeed *= -1;
-    digitalWrite(_R_in1, HIGH);
-    digitalWrite(_R_in2, LOW);
-    analogWrite(_R_enA, Rspeed);
+    digitalWrite(R_IN2, HIGH);
+    digitalWrite(R_IN2, LOW);
+    analogWrite(R_ENA, Rspeed);
 
-    digitalWrite(_R_in3, LOW);
-    digitalWrite(_R_in4, HIGH);
-    analogWrite(_R_enB, Rspeed);
+    digitalWrite(R_IN3, LOW);
+    digitalWrite(R_IN4, HIGH);
+    analogWrite(R_ENB, Rspeed);
   }
+  delay(50);
 }
 
 void Motor::turn_left(int speed, int amount) {
   setSpeed(amount * -10, speed);
-  delay(250);
+  delay(200);
   L_count++;
   R_count--;
 }
 void Motor::turn_right(int speed, int amount) {
   setSpeed(speed, amount * -10);
-  delay(250);
+  delay(200);
   R_count++;
   L_count--;
 }
@@ -114,9 +108,9 @@ void Motor::brake(void) {
   if (!brakeState)
     return;
   setSpeed(-80, -80);
-  delay(250);
-  setSpeed(0, 0);
   delay(200);
+  setSpeed(0, 0);
+  delay(150);
   brakeState = false;
 }
 

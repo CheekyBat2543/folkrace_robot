@@ -52,7 +52,7 @@ void loop() {
 
   if (motor.R_count >= 3) {
     while (motor.R_count != 0) {
-      if (M_cm <= 4 && (R_cm < 4 || L_cm < 4)) {
+      if (M_cm <= 3 && (R_cm < 3 || L_cm < 3)) {
         break;
       } else {
         motor.turn_left(100, 3);
@@ -63,7 +63,7 @@ void loop() {
     motor.L_count = 0;
   } else if (motor.L_count >= 3) {
     while (motor.L_count != 0) {
-      if (M_cm < 4 && (R_cm < 4 || L_cm < 4)) {
+      if (M_cm < 3 && (R_cm < 3 || L_cm < 3)) {
         break;
       } else {
         motor.turn_right(100, 3);
@@ -83,34 +83,17 @@ void loop() {
         motor.turn_left(60, 9);
       }
       motor.brakeState = true;
-    } else if ((L_cm > 2 && L_cm <= 10) || (R_cm > 2 && R_cm <= 10)) {
-      if (L_cm < R_cm) {
-        motor.turn_right(120, 3);
-      } else {
-        motor.turn_left(120, 3);
-      }
-      motor.brakeState = true;
-    } else if ((R_cm > 10 && R_cm <= 20) || (L_cm > 10 && L_cm <= 20)) {
-      if (L_cm < R_cm) {
-        motor.turn_right(120, 3);
-      } else {
-        motor.turn_left(120, 3);
-      }
-      motor.brakeState = true;
-    } else if ((R_cm > 20 && R_cm <= 30) || (L_cm > 20 && L_cm <= 30)) {
-      if (L_cm < R_cm) {
-        motor.turn_right(120, 2);
-      } else {
-        motor.turn_left(120, 2);
-      }
-      motor.brakeState = true;
-    } else if (L_cm > 30 && R_cm > 30) {
-      motor.setSpeed(100, 100);
-      delay(50);
-      motor.brakeState = true;
-      motor.L_count = 0;
-      motor.R_count = 0;
     }
+    else if (L_cm <= 20 || R_cm <= 20){
+      if (L_cm < R_cm) {
+        motor.turn_right(120, 2 - L_cm / 2);
+      } else {
+        motor.turn_left(120, 2 - R_cm / 2);
+      }
+    }
+    else {
+      motor.setSpeed(120, 120);
+    } 
   }
 
   else if (M_cm > 10 && M_cm <= 80) {
@@ -131,29 +114,17 @@ void loop() {
         motor.turn_right(120, 6);
       }
       motor.brakeState = true;
-    } else if ((L_cm > 10 && L_cm <= 20) || (R_cm > 10 && R_cm <= 20)) {
-      if (L_cm >= R_cm) {
-        motor.turn_left(120, 3);
+    } else if (L_cm <= 20 || R_cm <= 20){
+      if(L_cm >= R_cm){
+        motor.turn_left(120, 2 - L_cm / 2);
       } else {
-        motor.turn_right(120, 3);
+        motor.turn_right(120, 2 - R_cm / 2);
       }
-      motor.brakeState = true;
-    } else if ((L_cm > 20 && L_cm <= 30) || (R_cm > 20 && R_cm <= 30)) {
-      if (L_cm >= R_cm) {
-        motor.turn_left(120, 2);
-      } else {
-        motor.turn_right(120, 2);
-      }
-      if (L_cm > 30 && R_cm > 30) {
-        if (M_cm <= 40)
-          motor.setSpeed(M_cm + 5, M_cm + 5);
-        else
-          motor.setSpeed((M_cm + 20), (M_cm + 20));
-        delay(50);
-        motor.brakeState = true;
-        motor.L_count = 0;
-        motor.R_count = 0;
-      }
+    } else {
+      if (M_cm <= 40)
+        motor.setSpeed(M_cm + 10, M_cm + 10);
+      else
+        motor.setSpeed((M_cm + 30), (M_cm + 30));
     }
   }
 

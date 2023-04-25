@@ -27,7 +27,7 @@ class Motor {
 public:
   Motor();
   void begin(void);                      // sets motor pins as OUTPUT
-  void setSpeed(int Lspeed, int Rspeed); // sets pwm signal sent to motor shied
+  inline void setSpeed(int Lspeed, int Rspeed); // sets pwm signal sent to motor shied
   void brake(void);                      // brake in case of urgent stop
   void turn_left(int speed, int amount); // amount stands for 10 degrees per number
   void turn_right(int speed, int amount); // amount stands for 10 degrees per number
@@ -37,18 +37,6 @@ public:
   ~Motor();
 
 private:
-  int _L_in1;
-  int _L_in2;
-  int _L_enA;
-  int _L_in3;
-  int _L_in4;
-  int _L_enB;
-  int _R_in1;
-  int _R_in2;
-  int _R_enA;
-  int _R_in3;
-  int _R_in4;
-  int _R_enB;
 };
 
 #endif
