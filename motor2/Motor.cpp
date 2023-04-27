@@ -1,12 +1,6 @@
 #include "Motor.h"
 #include "Arduino.h"
 
-#define L_TRIG 5
-#define L_ECHO 4
-#define R_TRIG 52
-#define R_ECHO 50
-#define M_TRIG 7
-#define M_ECHO 6
 #define L_IN1 22
 #define L_IN2 24
 #define L_ENA 10
@@ -20,11 +14,7 @@
 #define R_IN4 40
 #define R_ENB 9
 
-Motor::Motor() {
-  R_count = 0;
-  L_count = 0;
-  brakeState = true;
-}
+Motor::Motor() : R_count(0), L_count(0), brakeState(true) {}
 
 void Motor::begin(void) {
   pinMode(L_IN1, OUTPUT);

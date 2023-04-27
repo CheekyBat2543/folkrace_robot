@@ -8,14 +8,14 @@
 #define M_TRIG 7
 #define M_ECHO 6
 
-NewPing M_sensor(M_TRIG, M_ECHO, 1000);
-NewPing R_sensor(R_TRIG, R_ECHO, 1000);
-NewPing L_sensor(L_TRIG, L_ECHO, 1000);
+#define MAX_DISTANCE 100
+
+NewPing M_sensor(M_TRIG, M_ECHO, MAX_DISTANCE);
+NewPing R_sensor(R_TRIG, R_ECHO, MAX_DISTANCE);
+NewPing L_sensor(L_TRIG, L_ECHO, MAX_DISTANCE);
 Motor motor;
 
 int L_cm = 0, M_cm = 0, R_cm = 0;
-int R_count = 0, L_count = 0;
-int i = 0;
 
 void sensorRead(void) {
   M_cm = M_sensor.ping_cm();
