@@ -8,7 +8,7 @@
 #define M_TRIG 7
 #define M_ECHO 6
 
-#define MAX_DISTANCE 100
+#define MAX_DISTANCE 200
 
 NewPing M_sensor(M_TRIG, M_ECHO, MAX_DISTANCE);
 NewPing R_sensor(R_TRIG, R_ECHO, MAX_DISTANCE);
@@ -40,6 +40,8 @@ void setup() {
 
 void loop() {
 
+  // motor.setSpeed(100, 100);
+
   sensorRead();
 
   Serial.print("Left Distance: ");
@@ -62,7 +64,7 @@ void loop() {
     motor.L_count = 0;
   } else if (motor.L_count >= 3) {
     while (motor.L_count != 0) {
-      if (M_cm < 3 && (R_cm < 3 || L_cm < 3)) {
+      if (M_cm <= 3 && (R_cm < 3 || L_cm < 3)) {
         break;
       } else {
         motor.turn_right(100, 3);
@@ -83,20 +85,22 @@ void loop() {
       }
       motor.brakeState = true;
     }
-    else if (L_cm <= 20 || R_cm <= 20){
+    else if (L_cm <= 15 || R_cm <= 15){
       if (L_cm < R_cm) {
-        motor.turn_right(120, 2 - L_cm / 10);
+        motor.turn_right(100, 3);
       } else {
-        motor.turn_left(120, 2 - R_cm / 10);
+        motor.turn_left(100, 3);
       }
+      motor.brakeState = true;
     }
     else {
       motor.setSpeed(120, 120);
+      motor.brakeState = true;
     } 
   }
 
-  else if (M_cm > 10 && M_cm <= 80) {
-    if ((L_cm >= 0 && L_cm <= 3) || (R_cm >= 0 && R_cm <= 3)) {
+  else if (M_cm > 10) {
+    if (L_cm <= 3 || R_cm <= 3) {
       motor.brake();
       motor.setSpeed(0, 0);
       delay(100);
@@ -105,8 +109,7 @@ void loop() {
       } else {
         motor.turn_right(60, 9);
       }
-      motor.brakeState = true;
-    } else if ((L_cm > 3 && L_cm <= 10) || (R_cm > 3 && R_cm <= 10)) {
+    } else if (L_cm <= 6 || R_cm <= 6) {
       if (L_cm >= R_cm) {
         motor.turn_left(120, 6);
       } else {
@@ -115,48 +118,52 @@ void loop() {
       motor.brakeState = true;
     } else if (L_cm <= 20 || R_cm <= 20){
       if(L_cm >= R_cm){
-        motor.turn_left(120, 2 - L_cm / 10);
+        motor.turn_left(120, 3);
       } else {
-        motor.turn_right(120, 2 - R_cm / 10);
+        motor.turn_right(120, 3);
       }
+      motor.brakeState = true;
     } else {
       if (M_cm <= 40)
-        motor.setSpeed(M_cm + 10, M_cm + 10);
+        motor.setSpeed(M_cm, M_cm);
       else
-        motor.setSpeed((M_cm + 30), (M_cm + 30));
+        motor.setSpeed((M_cm + 20), (M_cm + 20));
+      motor.brakeState = true;
     }
   }
 
-  else if (4 < M_cm && M_cm <= 10) {
+  else if (M_cm > 4) {
     motor.brake();
+    motor.setSpeed(0, 0);
     if (R_cm <= 3 || L_cm <= 3) {
       if (L_cm < R_cm) {
-        motor.turn_right(50, 8);
+        motor.turn_right(50, 10);
       } else {
-        motor.turn_left(50, 8);
+        motor.turn_left(50, 10);
       }
-    } else if ((R_cm > 3 && R_cm <= 15) || (L_cm > 3 && L_cm <= 15)) {
+    } else if (R_cm <= 6 || L_cm <= 6) {
       if (L_cm >= R_cm) {
-        motor.turn_left(120, 3);
+        motor.turn_left(50, 6);
       } else {
-        motor.turn_right(120, 3);
+        motor.turn_right(50, 6);
       }
-    } else if (R_cm > 15 && L_cm > 15) {
+    } else  {
       if (L_cm >= R_cm) {
-        motor.turn_left(120, 3);
+        motor.turn_left(80, 5);
       } else {
-        motor.turn_right(120, 3);
+        motor.turn_right(80, 5);
       }
     }
     motor.brakeState = true;
   }
 
-  else if (M_cm > 0 && M_cm <= 4) {
+  else if (M_cm > 0) {
     motor.brake();
+    motor.setSpeed(0,0);
     if (L_cm < R_cm) {
-      motor.turn_right(80, 8);
+      motor.turn_right(60, 10);
     } else {
-      motor.turn_left(80, 8);
+      motor.turn_left(60, 10);
     }
     motor.brakeState = true;
   }

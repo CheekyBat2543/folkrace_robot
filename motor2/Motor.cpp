@@ -13,8 +13,8 @@
 #define L_IN3 26 // PA4 (AD4) - Port A
 #define L_IN4 28 // PA6 (AD6) - Port A
 #define L_ENB 11
-#define R_IN1 42 // PL7       - Port L
-#define R_IN2 44 // PL5 (OC5C)- Port L
+#define R_IN1 44 // PL7       - Port L
+#define R_IN2 42 // PL5 (OC5C)- Port L
 #define R_ENA 8  
 #define R_IN3 38 // PD7 (T0)  - Port D
 #define R_IN4 40 // PG1 (RD)  - Port G
@@ -92,6 +92,8 @@ void Motor::begin(void) {
 // }
 
 void Motor::setSpeed(int Lspeed, int Rspeed) {
+
+  Rspeed *= 1.5;
 
   if(Lspeed == Rspeed) {
     L_count = 0;

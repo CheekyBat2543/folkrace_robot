@@ -12,8 +12,8 @@
 #define L_IN4 28
 #define L_ENB 11
 
-#define R_IN1 42
-#define R_IN2 44
+#define R_IN1 44
+#define R_IN2 42
 #define R_ENA 8
 
 #define R_IN3 38
