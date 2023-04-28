@@ -23,15 +23,14 @@ void sensorRead(void) {
   L_cm = L_sensor.ping_cm();
 
   if (M_cm == 0)
-    M_cm = 100;
+    M_cm = 120;
   if (R_cm == 0)
-    R_cm = 100;
+    R_cm = 120;
   if (L_cm == 0)
-    L_cm = 100;
+    L_cm = 120;
 }
 
 void setup() {
-
   motor.begin();
   Serial.begin(9600);
   Serial.setTimeout(10);
@@ -43,12 +42,12 @@ void loop() {
 
   sensorRead();
 
-  /*Serial.print("Left Distance: ");
+  Serial.print("Left Distance: ");
   Serial.println(L_cm);
   Serial.print("Middle Distance: ");
   Serial.println(M_cm);
   Serial.print("Right Distance: ");
-  Serial.println(R_cm); */
+  Serial.println(R_cm); 
 
   if (motor.R_count >= 3) {
     while (motor.R_count != 0) {
@@ -86,9 +85,9 @@ void loop() {
     }
     else if (L_cm <= 20 || R_cm <= 20){
       if (L_cm < R_cm) {
-        motor.turn_right(120, 2 - L_cm / 2);
+        motor.turn_right(120, 2 - L_cm / 10);
       } else {
-        motor.turn_left(120, 2 - R_cm / 2);
+        motor.turn_left(120, 2 - R_cm / 10);
       }
     }
     else {
@@ -116,9 +115,9 @@ void loop() {
       motor.brakeState = true;
     } else if (L_cm <= 20 || R_cm <= 20){
       if(L_cm >= R_cm){
-        motor.turn_left(120, 2 - L_cm / 2);
+        motor.turn_left(120, 2 - L_cm / 10);
       } else {
-        motor.turn_right(120, 2 - R_cm / 2);
+        motor.turn_right(120, 2 - R_cm / 10);
       }
     } else {
       if (M_cm <= 40)
